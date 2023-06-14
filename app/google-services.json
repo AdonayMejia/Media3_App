@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "851408157450",
+    "project_id": "media3compose-1f763",
+    "storage_bucket": "media3compose-1f763.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851408157450:android:7011a2f6a41ea1aac6d8f3",
+        "android_client_info": {
+          "package_name": "com.example.musicplayercompose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851408157450-n9dgpo3hod8kdnk73oi000rv28gocupp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoOCq54AAM5m-_Kmop_D-txcozzirx6AE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851408157450-n9dgpo3hod8kdnk73oi000rv28gocupp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
