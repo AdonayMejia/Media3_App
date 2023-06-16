@@ -69,8 +69,8 @@ fun MusicListScreen(
 
 @Composable
 fun MusicListScreenContent(
-    onSoundSearch:(String) -> Unit,
-    sounds:LazyPagingItems<MusicModel>
+    onSoundSearch: (String) -> Unit,
+    sounds: LazyPagingItems<MusicModel>
 ) {
 
     Column(
@@ -135,7 +135,7 @@ fun SoundListItem(sounds: MusicModel) {
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painter = painter, 
+            painter = painter,
             contentDescription = "Previews Images",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier

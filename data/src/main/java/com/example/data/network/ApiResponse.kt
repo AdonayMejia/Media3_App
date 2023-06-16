@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class ApiResponse(
     val count: Int,
-    val results:List<ApiResult>
+    val results: List<ApiResult>
 )
 
 data class ApiResult(
-    val id:Int,
-    val name:String,
-    val duration:Int,
+    val id: Int,
+    val name: String,
+    val duration: Int,
     val images: Images,
-    val previews:Previews
+    val previews: Previews
 )
 
 data class Images(

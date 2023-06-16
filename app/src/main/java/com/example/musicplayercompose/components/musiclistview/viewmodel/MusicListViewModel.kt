@@ -41,17 +41,6 @@ class MusicListViewModel @Inject constructor(
 
     val listUiState = _listUiState.asStateFlow()
 
-//    private fun createPaging(
-//       query:String
-//    ): Pager<Int,MusicModel>{
-//        return Pager(
-//            config = PagingConfig(
-//                pageSize = 15,
-//                enablePlaceholders = false
-//            ),
-//            pagingSourceFactory = { NewPagingSource(getSoundsUseCase,query) }
-//        )
-//    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val articlesFlow: Flow<PagingData<MusicModel>> = searchValue.flatMapLatest { query ->
@@ -65,15 +54,6 @@ class MusicListViewModel @Inject constructor(
     }.cachedIn(viewModelScope)
 
     private fun searchSounds(query:String){
-//        viewModelScope.launch {
-//            try {
-//                val result = getSoundsUseCase.getExecute(query)
-//                _sounds.emit(result)
-//            } catch (e: Exception) {
-//                Log.wtf("SoundViewModel", "API Error: ${e.message}")
-//            }
-//        }
         searchValue.value = query
-//        Log.wtf("Search", "${createPaging(searchValue.value).flow}")
     }
 }

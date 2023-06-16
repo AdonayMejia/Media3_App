@@ -16,7 +16,7 @@ import javax.inject.Singleton
 object MusicModule {
     @Provides
     @Singleton
-    fun createHttpClient(): OkHttpClient{
+    fun createHttpClient(): OkHttpClient {
 
         val interceptor = Interceptor { chain ->
             val request = chain.request().newBuilder()
@@ -32,7 +32,7 @@ object MusicModule {
 
     @Provides
     @Singleton
-    fun createRetrofit() : Retrofit{
+    fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://freesound.org")
             .addConverterFactory(GsonConverterFactory.create())
@@ -44,7 +44,7 @@ object MusicModule {
     @Singleton
     fun createRetrofitSearch(
         retrofit: Retrofit
-    ) : RetrofitSearch = retrofit.create(RetrofitSearch::class.java)
+    ): RetrofitSearch = retrofit.create(RetrofitSearch::class.java)
 
     private const val API_KEY = "QXjpjxX2UIndRl9YPQitPOAX0E3nVMUHGeAEy4lY"
 }
