@@ -30,17 +30,12 @@ class MusicListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val searchValue = MutableStateFlow("")
-    private val _sounds = MutableStateFlow<List<MusicModel>?>(null)
-    val sounds: StateFlow<List<MusicModel>?> get() = _sounds
-
     private val _listUiState = MutableStateFlow(
         ListUiState(
             searchSound = this::searchSounds
         )
     )
-
     val listUiState = _listUiState.asStateFlow()
-
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val articlesFlow: Flow<PagingData<MusicModel>> = searchValue.flatMapLatest { query ->

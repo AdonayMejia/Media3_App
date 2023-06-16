@@ -54,7 +54,6 @@ fun MusicListScreen(
 ) {
     val listState by viewModel.listUiState.collectAsState()
     val soundList = viewModel.articlesFlow.collectAsLazyPagingItems()
-    val list by viewModel.sounds.collectAsState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -79,72 +78,25 @@ fun MusicListScreenContent(
             .padding(dimensionResource(id = R.dimen.padding_all))
             .fillMaxSize()
     ) {
-//        OutlinedTextField(
-//            value = searchQuery.value,
-//            onValueChange = { searchQuery.value = it },
-//            label = { Text("Search") },
-//            trailingIcon = { IconButton(onClick = { onSoundSearch(searchQuery.value) })
-//            { Icon(Icons.Default.Search, contentDescription = "Search Icon") } },
-//            singleLine = true,
-//            modifier = Modifier.fillMaxWidth()
-//        )
+
         SearchBar(
-//            searchQuery = searchQuery,
             onSearchSound = { onSoundSearch(it) }
         )
         Spacer(modifier = Modifier.height(8.dp))
-//        list?.let {
-//            LazyColumn{
-//                items(it){
-//                    Text(text = it.name)
-//                }
-//            }
-//        }
+
         if (sounds.itemCount == 0) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    "No anime results",
+                    "No Sounds results",
                     style = MaterialTheme.typography.titleLarge
                 )
             }
 
         } else {
-            LazyColumn(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(sounds.itemCount) { sound ->
-                    val songList = sounds[sound] ?: return@items
-                    SoundListItem(sounds = songList)
-                }
-            }
+            ItemDisplay(sounds = sounds)
         }
     }
-
-}
-
-@Composable
-fun SoundListItem(sounds: MusicModel) {
-    val painter = rememberAsyncImagePainter(model = sounds.images.waveform)
-    Card(
-        shape = RectangleShape,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Image(
-            painter = painter,
-            contentDescription = "Previews Images",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(130.dp)
-        )
-        Text(
-            text = sounds.name
-        )
-    }
-    Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_all)))
 }
