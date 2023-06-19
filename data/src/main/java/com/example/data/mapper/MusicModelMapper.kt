@@ -9,7 +9,6 @@ fun ApiResult.toMusicModel():MusicModel {
     return MusicModel(
         id = id,
         name = name,
-        duration = duration,
         images = Images(images.waveform),
         preview = Previews(previews.previewHqMp3)
     )

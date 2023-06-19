@@ -22,4 +22,9 @@ class SoundRepositoryImpl @Inject constructor(
 
     }
 
+    override suspend fun getSound(id: Int) :MusicModel {
+        val response = apiService.getSound(id)
+        return response.toMusicModel()
+        }
+
 }

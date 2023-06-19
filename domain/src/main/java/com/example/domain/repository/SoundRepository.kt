@@ -8,4 +8,6 @@ interface SoundRepository {
         page:Int,
         pageSize:Int,
     ) : List<MusicModel>
+
+    suspend fun getSound(id:Int) : MusicModel
 }

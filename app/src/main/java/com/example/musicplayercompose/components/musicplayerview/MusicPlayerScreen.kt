@@ -1,5 +1,6 @@
 package com.example.musicplayercompose.components.musicplayerview
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -45,22 +47,17 @@ fun MusicPlayerScreen(
     soundId: Int,
     viewModel: MusicPlayerViewModel = hiltViewModel()
 ) {
-    val soundDetails by viewModel.soundDetail.collectAsState(null)
-
-    soundDetails?.let { sounds ->
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            MusicplayerScreenContent(sounds = sounds)
-        }
+    val uiState by viewModel.uiState.collectAsState()
+    LaunchedEffect(key1 = soundId) {
+        viewModel.preparePlayer(soundId)
+        Log.wtf("Sound", "$soundId")
     }
+    MusicplayerScreenContent(image = uiState.soundImage)
 }
 
 @Composable
 fun MusicplayerScreenContent(
-    sounds:MusicModel
+    image: String=""
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -77,7 +74,7 @@ fun MusicplayerScreenContent(
                     .height(dimensionResource(id = R.dimen.imageHeight))
             )
         } else {
-            val painter = rememberAsyncImagePainter(model = sounds.images.waveform)
+            val painter = rememberAsyncImagePainter(model = image)
 
             Image(
                 painter = painter,
@@ -134,15 +131,14 @@ fun MusicplayerScreenContent(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun MusicPlayerPreview() {
-    val sound = MusicModel(
-        id = 1,
-        name = "Piano Dan",
-        duration = 2,
-        images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
-        preview = Previews(previewHq = "Link")
-    )
-    MusicplayerScreenContent(sounds = sound)
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun MusicPlayerPreview() {
+//    val sound = MusicModel(
+//        id = 1,
+//        name = "Piano Dan",
+//        images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+//        preview = Previews(previewHq = "Link")
+//    )
+//    MusicplayerScreenContent(sounds = sound)
+//}

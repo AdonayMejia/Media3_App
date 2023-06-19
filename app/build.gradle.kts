@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.hilt.navigation)
     implementation(libs.bundles.pagin)
     implementation(libs.coil.compose)
+    implementation(libs.bundles.media3)
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.hilt.compiler)
     testImplementation(libs.junit)

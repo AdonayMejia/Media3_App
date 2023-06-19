@@ -10,7 +10,6 @@ data class ApiResponse(
 data class ApiResult(
     val id: Int,
     val name: String,
-    val duration: Int,
     val images: Images,
     val previews: Previews
 )
