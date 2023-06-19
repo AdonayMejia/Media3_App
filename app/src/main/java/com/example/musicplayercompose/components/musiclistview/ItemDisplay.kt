@@ -11,14 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import com.example.domain.musicmodel.MusicModel
 import com.example.musicplayercompose.components.musiclistview.utils.isLandscape
 
 @Composable
 fun ItemDisplay(
-    sounds: LazyPagingItems<MusicModel>
-
+    sounds: LazyPagingItems<MusicModel>,
+    navController: NavHostController
 ) {
     if (isLandscape()) {
         LazyVerticalGrid(
@@ -28,7 +29,10 @@ fun ItemDisplay(
         ){
             items(sounds.itemCount) {sound ->
                 val soundList = sounds[sound] ?: return@items
-                SoundListItem(sounds = soundList)
+                SoundListItem(
+                    sounds = soundList,
+                    navHostController = navController
+                )
             }
         }
     } else {
@@ -39,7 +43,10 @@ fun ItemDisplay(
         ) {
             items(sounds.itemCount) { sound ->
                 val songList = sounds[sound] ?: return@items
-                SoundListItem(sounds = songList)
+                SoundListItem(
+                    sounds = songList,
+                    navHostController = navController
+                )
             }
         }
     }

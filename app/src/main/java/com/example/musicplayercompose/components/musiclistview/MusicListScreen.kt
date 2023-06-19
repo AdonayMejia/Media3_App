@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
@@ -50,7 +51,8 @@ import com.example.musicplayercompose.components.musiclistview.viewmodel.MusicLi
 
 @Composable
 fun MusicListScreen(
-    viewModel: MusicListViewModel = hiltViewModel()
+    viewModel: MusicListViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
     val listState by viewModel.listUiState.collectAsState()
     val soundList = viewModel.articlesFlow.collectAsLazyPagingItems()
@@ -61,7 +63,8 @@ fun MusicListScreen(
     ) {
         MusicListScreenContent(
             onSoundSearch = listState.searchSound,
-            sounds = soundList
+            sounds = soundList,
+            navController = navController
         )
     }
 }
@@ -69,7 +72,8 @@ fun MusicListScreen(
 @Composable
 fun MusicListScreenContent(
     onSoundSearch: (String) -> Unit,
-    sounds: LazyPagingItems<MusicModel>
+    sounds: LazyPagingItems<MusicModel>,
+    navController: NavHostController
 ) {
 
     Column(
@@ -96,7 +100,10 @@ fun MusicListScreenContent(
             }
 
         } else {
-            ItemDisplay(sounds = sounds)
+            ItemDisplay(
+                sounds = sounds,
+                navController = navController
+            )
         }
     }
 }
