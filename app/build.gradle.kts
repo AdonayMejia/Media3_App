@@ -70,6 +70,8 @@ dependencies {
     implementation(libs.bundles.pagin)
     implementation(libs.coil.compose)
     implementation(libs.bundles.media3)
+    implementation(libs.compose.material.icons.core)
+    implementation(libs.compose.material.icons.extended)
     kapt(libs.hilt.compiler)
     kapt(libs.hilt.hilt.compiler)
     testImplementation(libs.junit)

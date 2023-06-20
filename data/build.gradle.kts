@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.bundles.retrofit)
     implementation(libs.dagger.hilt)
+    implementation(libs.bundles.media3)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

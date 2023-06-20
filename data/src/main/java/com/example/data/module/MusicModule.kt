@@ -1,9 +1,12 @@
 package com.example.data.module
 
+import android.content.Context
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.data.network.RetrofitSearch
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -45,6 +48,14 @@ object MusicModule {
     fun createRetrofitSearch(
         retrofit: Retrofit
     ): RetrofitSearch = retrofit.create(RetrofitSearch::class.java)
+
+    @Provides
+    @Singleton
+    fun createMediaPlayer(@ApplicationContext context: Context):ExoPlayer{
+        return ExoPlayer.Builder(context)
+            .build()
+    }
+
 
     private const val API_KEY = "QXjpjxX2UIndRl9YPQitPOAX0E3nVMUHGeAEy4lY"
 }
