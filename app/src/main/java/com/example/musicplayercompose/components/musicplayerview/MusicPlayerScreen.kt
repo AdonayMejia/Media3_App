@@ -3,7 +3,9 @@ package com.example.musicplayercompose.components.musicplayerview
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,26 +13,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowLeft
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderPositions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -39,17 +38,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.domain.musicmodel.Images
-import com.example.domain.musicmodel.MusicModel
-import com.example.domain.musicmodel.Previews
 import com.example.musicplayercompose.R
-import com.example.musicplayercompose.components.musicplayerview.utils.UiEvents
+import com.example.data.media.UiEvents
+import com.example.musicplayercompose.components.musicplayerview.utils.PlayerStatus
 import com.example.musicplayercompose.components.musicplayerview.viewmodel.MusicPlayerViewModel
 
 @Composable
@@ -58,19 +53,38 @@ fun MusicPlayerScreen(
     viewModel: MusicPlayerViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val sliderPosition by viewModel.sliderPosition.collectAsState()
+
     LaunchedEffect(key1 = soundId) {
-        viewModel.preparePlayer(soundId)
-        Log.wtf("Sound", "$soundId")
+        uiState.preparePlayer(soundId)
     }
-    MusicplayerScreenContent(
-        image = uiState.soundImage,
-        name = uiState.soundName,
-        mediaEvents = uiState.mediaEvents,
-        isPlaying = uiState.isPlaying,
-        sliderPosition = sliderPosition,
-        sliderPositionChange = uiState.updateBar
-        )
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        when (uiState.mediaPlayerStatus) {
+            PlayerStatus.Initial -> CircularProgressIndicator(
+                modifier = Modifier
+                    .size(dimensionResource(id = R.dimen.size_30dp))
+                    .align(Alignment.Center)
+            )
+
+            is PlayerStatus.Ready -> {
+                MusicplayerScreenContent(
+                    image = uiState.soundImage,
+                    name = uiState.soundName,
+                    mediaEvents = uiState.mediaEvents,
+                    isPlaying = uiState.isPlaying,
+                    progressFloat = uiState.progressFloat,
+                    progressString = uiState.progressString
+                )
+            }
+        }
+
+    }
+
+
 }
 
 @SuppressLint("UnrememberedMutableState")
@@ -80,8 +94,8 @@ fun MusicplayerScreenContent(
     name:String = "",
     mediaEvents:(UiEvents) -> Unit,
     isPlaying:Boolean,
-    sliderPosition:Float,
-    sliderPositionChange:(Boolean) -> Unit
+    progressFloat:Float,
+    progressString:String
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -117,9 +131,20 @@ fun MusicplayerScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
         )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = dimensionResource(id = R.dimen.padding_16dp))
+        ) {
+            Text(
+                text = progressString,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
         Slider(
-            value = sliderPosition,
-            onValueChange = { sliderPositionChange(isPlaying) }
+            value = progressFloat,
+            onValueChange = {}
         )
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -142,15 +167,15 @@ fun MusicplayerScreenContent(
                 onClick = { mediaEvents(UiEvents.Play) },
                 containerColor = MaterialTheme.colorScheme.error
             ) {
-                if (!isPlaying){
+                if (isPlaying){
                     Icon(
-                        imageVector = Icons.Rounded.PlayArrow,
+                        imageVector = Icons.Rounded.Pause,
                         contentDescription = stringResource(R.string.play),
                         tint = MaterialTheme.colorScheme.onError
                     )
                 } else{
                     Icon(
-                        imageVector = Icons.Rounded.Pause,
+                        imageVector = Icons.Rounded.PlayArrow,
                         contentDescription = stringResource(R.string.play),
                         tint = MaterialTheme.colorScheme.onError
                     )

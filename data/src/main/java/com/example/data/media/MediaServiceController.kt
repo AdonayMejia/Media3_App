@@ -1,17 +1,15 @@
-package com.example.musicplayercompose.components.musicplayerview.utils
+package com.example.data.media
 
 import android.annotation.SuppressLint
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-import dagger.Provides
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -23,6 +21,7 @@ class MediaServiceController @Inject constructor(
 ) : Player.Listener {
 
     private val _mediaState = MutableStateFlow<MediaState>(MediaState.init)
+
     val mediaState = _mediaState.asStateFlow()
 
     private var job: Job? = null

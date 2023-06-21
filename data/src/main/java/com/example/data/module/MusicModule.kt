@@ -49,13 +49,6 @@ object MusicModule {
         retrofit: Retrofit
     ): RetrofitSearch = retrofit.create(RetrofitSearch::class.java)
 
-    @Provides
-    @Singleton
-    fun createMediaPlayer(@ApplicationContext context: Context):ExoPlayer{
-        return ExoPlayer.Builder(context)
-            .build()
-    }
-
 
     private const val API_KEY = "QXjpjxX2UIndRl9YPQitPOAX0E3nVMUHGeAEy4lY"
 }
