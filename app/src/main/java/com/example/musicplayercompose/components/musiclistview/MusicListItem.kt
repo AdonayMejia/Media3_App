@@ -14,10 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.domain.musicmodel.Images
 import com.example.domain.musicmodel.MusicModel
+import com.example.domain.musicmodel.Previews
 import com.example.musicplayercompose.R
 
 @Composable
@@ -47,4 +51,19 @@ fun SoundListItem(
         )
     }
     Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_all)))
+}
+
+@Preview
+@Composable
+fun ItemPreview() {
+    val model = MusicModel(
+            id = 1,
+            name = "Piano Dan",
+            images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+            preview = Previews(previewHq = "Link")
+        )
+
+    val controller = rememberNavController()
+
+    SoundListItem(sounds = model, navHostController = controller)
 }

@@ -38,16 +38,22 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
+import com.example.domain.musicmodel.Images
 import com.example.domain.musicmodel.MusicModel
+import com.example.domain.musicmodel.Previews
 import com.example.musicplayercompose.R
 import com.example.musicplayercompose.components.musiclistview.viewmodel.MusicListViewModel
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun MusicListScreen(
@@ -106,4 +112,44 @@ fun MusicListScreenContent(
             )
         }
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun ListPreview() {
+    val controller = rememberNavController()
+
+    val sounds = flowOf(
+        PagingData.from(
+            listOf(
+                MusicModel(id = 1,
+                    name = "Piano Dan",
+                    images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+                    preview = Previews(previewHq = "Link")
+                ),
+                MusicModel(id = 1,
+                    name = "Piano Dan",
+                    images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+                    preview = Previews(previewHq = "Link")
+                ),
+                MusicModel(id = 1,
+                    name = "Piano Dan",
+                    images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+                    preview = Previews(previewHq = "Link")
+                ),
+                MusicModel(id = 1,
+                    name = "Piano Dan",
+                    images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+                    preview = Previews(previewHq = "Link")
+                ),
+                MusicModel(id = 1,
+                    name = "Piano Dan",
+                    images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+                    preview = Previews(previewHq = "Link")
+                )
+            )
+        )
+    ).collectAsLazyPagingItems()
+
+    MusicListScreenContent(onSoundSearch = {}, sounds = sounds, navController = controller)
 }

@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.musicplayercompose.R
 import kotlinx.coroutines.launch
@@ -43,8 +44,7 @@ fun SearchBar(
             searchQuery.value = it
             scope.launch {
                 onSearchSound(it)
-            }
-                        },
+            } },
         label = { Text(text = "Search Sounds") },
         singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
@@ -80,4 +80,10 @@ fun SearchBar(
         }
     )
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchBarPreview() {
+    SearchBar(onSearchSound = {})
 }

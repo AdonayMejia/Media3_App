@@ -38,12 +38,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.musicplayercompose.R
 import com.example.data.media.UiEvents
+import com.example.domain.musicmodel.Images
+import com.example.domain.musicmodel.MusicModel
+import com.example.domain.musicmodel.Previews
 import com.example.musicplayercompose.components.musicplayerview.utils.PlayerStatus
 import com.example.musicplayercompose.components.musicplayerview.viewmodel.MusicPlayerViewModel
 
@@ -197,14 +201,12 @@ fun MusicplayerScreenContent(
     }
 }
 
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun MusicPlayerPreview() {
-//    val sound = MusicModel(
-//        id = 1,
-//        name = "Piano Dan",
-//        images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
-//        preview = Previews(previewHq = "Link")
-//    )
-//    MusicplayerScreenContent(sounds = sound)
-//}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun MusicPlayerPreview() {
+    MusicplayerScreenContent(
+        mediaEvents = {} ,
+        isPlaying = false ,
+        progressFloat = 0f ,
+        progressString = "00:15")
+}
