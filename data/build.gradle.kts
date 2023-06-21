@@ -12,9 +12,19 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField(
+            "String",
+            "FREESOUND_API_BASE_URL",
+            project.property("freeSoundBaseUrl").toString()
+        )
+        buildConfigField(
+            "String",
+            "FREESOUND_API_KEY",
+            project.property("freeSoundApiKey").toString()
+        )
     }
 
     buildTypes {
@@ -27,16 +37,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+    buildFeatures{
+        buildConfig = true
     }
 }
 
 dependencies {
 
+    implementation(project(":domain"))
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -44,6 +58,9 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.bundles.retrofit)
     implementation(libs.dagger.hilt)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.bundles.media3)
+    implementation(libs.glide)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
