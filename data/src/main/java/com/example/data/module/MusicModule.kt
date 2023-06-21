@@ -1,12 +1,10 @@
 package com.example.data.module
 
-import android.content.Context
-import androidx.media3.exoplayer.ExoPlayer
+import com.example.data.BuildConfig
 import com.example.data.network.RetrofitSearch
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -23,7 +21,7 @@ object MusicModule {
 
         val interceptor = Interceptor { chain ->
             val request = chain.request().newBuilder()
-                .header("Authorization", "Token $API_KEY")
+                .header("Authorization", "Token ${BuildConfig.FREESOUND_API_KEY}")
                 .build()
             chain.proceed(request)
         }
@@ -37,7 +35,7 @@ object MusicModule {
     @Singleton
     fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://freesound.org")
+            .baseUrl(BuildConfig.FREESOUND_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(createHttpClient())
             .build()
@@ -49,6 +47,4 @@ object MusicModule {
         retrofit: Retrofit
     ): RetrofitSearch = retrofit.create(RetrofitSearch::class.java)
 
-
-    private const val API_KEY = "QXjpjxX2UIndRl9YPQitPOAX0E3nVMUHGeAEy4lY"
 }

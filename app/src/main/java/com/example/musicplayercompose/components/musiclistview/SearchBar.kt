@@ -13,21 +13,17 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.musicplayercompose.R
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -44,7 +40,8 @@ fun SearchBar(
             searchQuery.value = it
             scope.launch {
                 onSearchSound(it)
-            } },
+            }
+        },
         label = { Text(text = "Search Sounds") },
         singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
@@ -66,10 +63,10 @@ fun SearchBar(
         ),
         trailingIcon = {
             IconButton(onClick = {
-                    scope.launch {
-                        onSearchSound(searchQuery.value)
-                        keyBoardController?.hide()
-                    }
+                scope.launch {
+                    onSearchSound(searchQuery.value)
+                    keyBoardController?.hide()
+                }
             }) {
                 Icon(
                     Icons.Default.Search,

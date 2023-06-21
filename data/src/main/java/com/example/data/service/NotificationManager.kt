@@ -24,7 +24,8 @@ class NotificationManager @Inject constructor(
     private val exoPlayer: ExoPlayer
 ) {
 
-    private var notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(context)
+    private var notificationManager: NotificationManagerCompat =
+        NotificationManagerCompat.from(context)
 
     init {
         createsNotificationChannel()
@@ -36,7 +37,7 @@ class NotificationManager @Inject constructor(
         mediaSession: MediaSession,
         pendingIntent: PendingIntent
     ) {
-        buildNotification(mediaSession,pendingIntent)
+        buildNotification(mediaSession, pendingIntent)
         startForegroundNotification(mediaSessionService)
     }
 
@@ -70,7 +71,7 @@ class NotificationManager @Inject constructor(
         mediaSessionService.startForeground(NOTIFICATION_ID, notification)
     }
 
-    private fun createsNotificationChannel(){
+    private fun createsNotificationChannel() {
         val channel = NotificationChannel(
             CHANNEL_ID,
             CHANNEL_NAME,
@@ -79,7 +80,7 @@ class NotificationManager @Inject constructor(
         notificationManager.createNotificationChannel(channel)
     }
 
-    companion object{
+    companion object {
         private const val NOTIFICATION_ID = 169
         private const val CHANNEL_NAME = "channel 1"
         private const val CHANNEL_ID = "channel id 1"

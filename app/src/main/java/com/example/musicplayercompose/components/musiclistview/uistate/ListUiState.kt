@@ -1,5 +1,5 @@
 package com.example.musicplayercompose.components.musiclistview.uistate
 
 data class ListUiState(
-    val searchSound:(String) -> Unit = {}
+    val searchSound: (String) -> Unit = {}
 )

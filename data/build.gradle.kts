@@ -12,9 +12,19 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField(
+            "String",
+            "FREESOUND_API_BASE_URL",
+            project.property("freeSoundBaseUrl").toString()
+        )
+        buildConfigField(
+            "String",
+            "FREESOUND_API_KEY",
+            project.property("freeSoundApiKey").toString()
+        )
     }
 
     buildTypes {
@@ -32,6 +42,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+    buildFeatures{
+        buildConfig = true
     }
 }
 

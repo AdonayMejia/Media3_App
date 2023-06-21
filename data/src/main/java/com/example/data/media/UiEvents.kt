@@ -1,7 +1,7 @@
 package com.example.data.media
 
-sealed class UiEvents{
+sealed class UiEvents {
     object Backward : UiEvents()
     object Forward : UiEvents()
-    object Play: UiEvents()
+    object Play : UiEvents()
 }

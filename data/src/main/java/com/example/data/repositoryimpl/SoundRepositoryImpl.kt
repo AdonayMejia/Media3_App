@@ -11,20 +11,23 @@ class SoundRepositoryImpl @Inject constructor(
     private val apiService: RetrofitSearch
 ) : SoundRepository {
     override suspend fun searchSounds(query: String, page: Int, pageSize: Int): List<MusicModel> {
-        if (query.isEmpty()){
+        if (query.isEmpty()) {
             return emptyList()
         }
-        val response = apiService.searchSounds(query = query, page = page.toString(), pageSize = pageSize.toString())
-        Log.wtf("ItWorks","$response")
+        val response = apiService.searchSounds(
+            query = query,
+            page = page.toString(),
+            pageSize = pageSize.toString()
+        )
+        Log.wtf("ItWorks", "$response")
         return response.results.map {
             it.toMusicModel()
         }
-
     }
 
-    override suspend fun getSound(id: Int) :MusicModel {
+    override suspend fun getSound(id: Int): MusicModel {
         val response = apiService.getSound(id)
         return response.toMusicModel()
-        }
+    }
 
 }

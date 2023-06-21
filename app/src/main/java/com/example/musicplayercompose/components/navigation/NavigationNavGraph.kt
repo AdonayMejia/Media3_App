@@ -11,19 +11,19 @@ import com.example.musicplayercompose.components.musicplayerview.MusicPlayerScre
 
 @Composable
 fun NavGraph(
-    navController:NavHostController
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
         startDestination = "MusicListScreen",
-        ) {
-        composable( route = "MusicListScreen"){
+    ) {
+        composable(route = "MusicListScreen") {
             MusicListScreen(navController = navController)
         }
         composable(
             route = "MusicPlayerScreen/{soundId}",
-            arguments = listOf(navArgument("soundId") {type = NavType.IntType})
-        ){ backStackEntry ->
+            arguments = listOf(navArgument("soundId") { type = NavType.IntType })
+        ) { backStackEntry ->
             backStackEntry.arguments?.getInt("soundId")?.let { soundId ->
                 MusicPlayerScreen(soundId = soundId)
             }

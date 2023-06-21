@@ -1,7 +1,6 @@
 package com.example.musicplayercompose.components.musicplayerview
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -43,11 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import com.example.musicplayercompose.R
 import com.example.data.media.UiEvents
-import com.example.domain.musicmodel.Images
-import com.example.domain.musicmodel.MusicModel
-import com.example.domain.musicmodel.Previews
+import com.example.musicplayercompose.R
 import com.example.musicplayercompose.components.musicplayerview.utils.PlayerStatus
 import com.example.musicplayercompose.components.musicplayerview.viewmodel.MusicPlayerViewModel
 
@@ -87,26 +83,24 @@ fun MusicPlayerScreen(
         }
 
     }
-
-
 }
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun MusicplayerScreenContent(
     image: String = "",
-    name:String = "",
-    mediaEvents:(UiEvents) -> Unit,
-    isPlaying:Boolean,
-    progressFloat:Float,
-    progressString:String
+    name: String = "",
+    mediaEvents: (UiEvents) -> Unit,
+    isPlaying: Boolean,
+    progressFloat: Float,
+    progressString: String
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        if (LocalInspectionMode.current){
+        if (LocalInspectionMode.current) {
             val painter = painterResource(id = R.drawable.noimage)
             Image(
                 painter = painter,
@@ -171,13 +165,13 @@ fun MusicplayerScreenContent(
                 onClick = { mediaEvents(UiEvents.Play) },
                 containerColor = MaterialTheme.colorScheme.error
             ) {
-                if (isPlaying){
+                if (isPlaying) {
                     Icon(
                         imageVector = Icons.Rounded.Pause,
                         contentDescription = stringResource(R.string.play),
                         tint = MaterialTheme.colorScheme.onError
                     )
-                } else{
+                } else {
                     Icon(
                         imageVector = Icons.Rounded.PlayArrow,
                         contentDescription = stringResource(R.string.play),
@@ -205,8 +199,8 @@ fun MusicplayerScreenContent(
 @Composable
 fun MusicPlayerPreview() {
     MusicplayerScreenContent(
-        mediaEvents = {} ,
-        isPlaying = false ,
-        progressFloat = 0f ,
+        mediaEvents = {},
+        isPlaying = false,
+        progressFloat = 0f,
         progressString = "00:15")
 }

@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class GetSoundsUseCase @Inject constructor(
     private val soundRepository: SoundRepository
-){
-    suspend fun getExecute(query:String, page:Int, pageSize:Int) : List<MusicModel>{
+) {
+    suspend fun getExecute(query: String, page: Int, pageSize: Int): List<MusicModel> {
         return soundRepository.searchSounds(query, page = page, pageSize = pageSize)
     }
 }

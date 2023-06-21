@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetSoundByIdUSeCase @Inject constructor(
     private val soundRepository: SoundRepository
 ) {
-    suspend fun getExecute(id:Int) : MusicModel{
+    suspend fun getExecute(id: Int): MusicModel {
         return soundRepository.getSound(id)
     }
 }

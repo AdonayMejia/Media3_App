@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class NewPagingSource @Inject constructor(
     private val getSoundsUseCase: GetSoundsUseCase,
-    private val query:String
-) : PagingSource<Int,MusicModel>() {
+    private val query: String
+) : PagingSource<Int, MusicModel>() {
 
     override fun getRefreshKey(state: PagingState<Int, MusicModel>): Int? {
         return state.anchorPosition?.let { position ->
@@ -31,7 +31,7 @@ class NewPagingSource @Inject constructor(
                 prevKey = if (page == 1) null else page - 1,
                 nextKey = if (response.isEmpty()) null else page + 1
             )
-        } catch (e:Exception){
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }

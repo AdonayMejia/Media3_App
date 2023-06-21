@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import com.example.domain.usecases.GetSoundByIdUSeCase
-import com.example.musicplayercompose.components.musicplayerview.uistate.PlayerUiState
 import com.example.data.media.MediaServiceController
 import com.example.data.media.MediaState
 import com.example.data.media.PlayerEvents
 import com.example.data.media.UiEvents
+import com.example.domain.usecases.GetSoundByIdUSeCase
+import com.example.musicplayercompose.components.musicplayerview.uistate.PlayerUiState
 import com.example.musicplayercompose.components.musicplayerview.utils.PlayerStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,14 +27,12 @@ class MusicPlayerViewModel @Inject constructor(
     private val mediaService: MediaServiceController,
 ) : ViewModel() {
 
-
     private val _uiState = MutableStateFlow(
         PlayerUiState(
             soundImage = "",
             soundName = "",
             mediaEvents = this::useEvents,
             isPlaying = false,
-            durationFormat = ::formatDuration,
             duration = 0L,
             progressFloat = 0f,
             progressString = "00:00",
@@ -95,8 +93,9 @@ class MusicPlayerViewModel @Inject constructor(
             progressString = calculatedProgressString
         )
     }
-      @SuppressLint("SuspiciousIndentation")
-      fun preparePlayer(id:Int){
+
+    @SuppressLint("SuspiciousIndentation")
+    fun preparePlayer(id: Int) {
         viewModelScope.launch {
             runCatching {
                 val response = getSoundByIdUSeCase.getExecute(id)
@@ -108,18 +107,18 @@ class MusicPlayerViewModel @Inject constructor(
                             .setArtworkUri(Uri.parse(response.images.waveform))
                             .build()
                     ).build()
-                    mediaService.addPlayerItem(mediaItem)
-                _uiState.value= _uiState.value.copy(
+                mediaService.addPlayerItem(mediaItem)
+                _uiState.value = _uiState.value.copy(
                     soundImage = response.images.waveform,
                     soundName = response.name
                 )
             }.onFailure { e -> Log.d("Error", "${e.message}") }
         }
-     }
+    }
 
-    private fun useEvents(events: UiEvents){
+    private fun useEvents(events: UiEvents) {
         viewModelScope.launch {
-            when(events){
+            when (events) {
                 UiEvents.Play -> mediaService.onPlayerEvent(PlayerEvents.Play)
                 UiEvents.Forward -> mediaService.onPlayerEvent(PlayerEvents.Forward)
                 UiEvents.Backward -> mediaService.onPlayerEvent(PlayerEvents.Backward)
@@ -127,7 +126,7 @@ class MusicPlayerViewModel @Inject constructor(
         }
     }
 
-    companion object{
+    companion object {
         private const val DURATION_FORMAT = "%02d:%02d"
         private const val DEFAULT_PROGRESS_VALUE = 0L
         private const val DEFAULT_PROGRESS_PERCENTAGE = 0f

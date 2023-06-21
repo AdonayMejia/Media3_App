@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 
 class MediaServiceController @Inject constructor(
-    private val exoPlayer:ExoPlayer
+    private val exoPlayer: ExoPlayer
 ) : Player.Listener {
 
     private val _mediaState = MutableStateFlow<MediaState>(MediaState.init)
@@ -31,7 +31,7 @@ class MediaServiceController @Inject constructor(
         job = Job()
     }
 
-    fun addPlayerItem(mediaItem:MediaItem){
+    fun addPlayerItem(mediaItem: MediaItem) {
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
         exoPlayer.play()
@@ -51,6 +51,7 @@ class MediaServiceController @Inject constructor(
                     startProgressUpdate()
                 }
             }
+
             PlayerEvents.Stop -> stopProgressUpdate()
             is PlayerEvents.ChangeProgress ->
                 exoPlayer.seekTo((exoPlayer.duration * playerEvent.newProgress).toLong())
@@ -92,9 +93,9 @@ class MediaServiceController @Inject constructor(
         _mediaState.value = MediaState.Playing(isPlaying = false)
     }
 
-    private fun seekPlayer(exoPlayer: ExoPlayer, seconds:Long, isSkipped:Boolean){
+    private fun seekPlayer(exoPlayer: ExoPlayer, seconds: Long, isSkipped: Boolean) {
         val time = TimeUnit.SECONDS.toMillis(seconds)
-        val newPosition = if (isSkipped){
+        val newPosition = if (isSkipped) {
             (exoPlayer.currentPosition + time).coerceAtMost(exoPlayer.duration)
         } else {
             (exoPlayer.currentPosition - time).coerceAtLeast(MINIMUM_VALUE)
@@ -102,9 +103,8 @@ class MediaServiceController @Inject constructor(
         exoPlayer.seekTo(newPosition)
     }
 
-    companion object{
+    companion object {
         private const val SEEK_SECONDS = 15L
         private const val MINIMUM_VALUE = 0L
     }
-
 }

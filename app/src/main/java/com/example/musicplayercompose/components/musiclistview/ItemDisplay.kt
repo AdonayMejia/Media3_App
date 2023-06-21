@@ -2,16 +2,13 @@ package com.example.musicplayercompose.components.musiclistview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.PagingData
@@ -33,8 +30,8 @@ fun ItemDisplay(
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalArrangement = Arrangement.SpaceEvenly,
             columns = GridCells.Fixed(4),
-        ){
-            items(sounds.itemCount) {sound ->
+        ) {
+            items(sounds.itemCount) { sound ->
                 val soundList = sounds[sound] ?: return@items
                 SoundListItem(
                     sounds = soundList,
@@ -67,34 +64,39 @@ fun PreviewItemDisplay() {
     val sounds = flowOf(
         PagingData.from(
             listOf(
-                MusicModel(id = 1,
-                name = "Piano Dan",
-                images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
-                preview = Previews(previewHq = "Link")
-                ),
-                MusicModel(id = 1,
+                MusicModel(
+                    id = 1,
                     name = "Piano Dan",
                     images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
                     preview = Previews(previewHq = "Link")
                 ),
-                MusicModel(id = 1,
+                MusicModel(
+                    id = 1,
                     name = "Piano Dan",
                     images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
                     preview = Previews(previewHq = "Link")
                 ),
-                MusicModel(id = 1,
+                MusicModel(
+                    id = 1,
                     name = "Piano Dan",
                     images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
                     preview = Previews(previewHq = "Link")
                 ),
-                MusicModel(id = 1,
+                MusicModel(
+                    id = 1,
                     name = "Piano Dan",
                     images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
                     preview = Previews(previewHq = "Link")
-                )
+                ),
+                MusicModel(
+                    id = 1,
+                    name = "Piano Dan",
+                    images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+                    preview = Previews(previewHq = "Link")
                 )
             )
-        ).collectAsLazyPagingItems()
+        )
+    ).collectAsLazyPagingItems()
 
-    ItemDisplay(sounds = sounds , navController = controller)
+    ItemDisplay(sounds = sounds, navController = controller)
 }

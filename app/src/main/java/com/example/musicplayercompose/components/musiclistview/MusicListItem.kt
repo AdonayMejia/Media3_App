@@ -57,11 +57,11 @@ fun SoundListItem(
 @Composable
 fun ItemPreview() {
     val model = MusicModel(
-            id = 1,
-            name = "Piano Dan",
-            images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
-            preview = Previews(previewHq = "Link")
-        )
+        id = 1,
+        name = "Piano Dan",
+        images = Images(waveform = "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/04/kimetsu-no-yaiba-husbando-mitsuri-fanart.jpg"),
+        preview = Previews(previewHq = "Link")
+    )
 
     val controller = rememberNavController()
 

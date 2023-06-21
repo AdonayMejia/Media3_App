@@ -16,7 +16,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PlayerService : MediaSessionService(){
+class PlayerService : MediaSessionService() {
 
     @Inject
     lateinit var mediaSession: MediaSession

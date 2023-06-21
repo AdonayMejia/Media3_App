@@ -18,5 +18,4 @@ abstract class RepositoryModule {
         musicRepositoryImpl: SoundRepositoryImpl
     ): SoundRepository
 
-
 }

@@ -29,7 +29,7 @@ class MediaModule {
 
     @Provides
     @Singleton
-    fun createMediaPlayer(@ApplicationContext context: Context):ExoPlayer{
+    fun createMediaPlayer(@ApplicationContext context: Context): ExoPlayer {
         return ExoPlayer.Builder(context)
             .build()
     }
