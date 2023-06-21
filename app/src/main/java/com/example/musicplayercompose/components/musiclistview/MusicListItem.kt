@@ -16,8 +16,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.domain.musicmodel.Images
 import com.example.domain.musicmodel.MusicModel
@@ -27,7 +25,7 @@ import com.example.musicplayercompose.R
 @Composable
 fun SoundListItem(
     sounds: MusicModel,
-    navHostController: NavHostController
+    onSoundSelected: (Int) -> Unit
 ) {
     val painter = rememberAsyncImagePainter(model = sounds.images.waveform)
     Card(
@@ -35,7 +33,7 @@ fun SoundListItem(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
-            .clickable { navHostController.navigate("MusicPlayerScreen/${sounds.id}") }
+            .clickable { onSoundSelected(sounds.id) }
     ) {
         Image(
             painter = painter,
@@ -63,7 +61,5 @@ fun ItemPreview() {
         preview = Previews(previewHq = "Link")
     )
 
-    val controller = rememberNavController()
-
-    SoundListItem(sounds = model, navHostController = controller)
+    SoundListItem(sounds = model, onSoundSelected = {})
 }

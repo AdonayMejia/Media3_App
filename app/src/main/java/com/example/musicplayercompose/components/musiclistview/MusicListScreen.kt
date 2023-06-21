@@ -18,8 +18,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -33,7 +31,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 fun MusicListScreen(
     viewModel: MusicListViewModel = hiltViewModel(),
-    navController: NavHostController
+    onSoundSelected: (Int) -> Unit
 ) {
     val listState by viewModel.listUiState.collectAsState()
     val soundList = viewModel.articlesFlow.collectAsLazyPagingItems()
@@ -45,7 +43,7 @@ fun MusicListScreen(
         MusicListScreenContent(
             onSoundSearch = listState.searchSound,
             sounds = soundList,
-            navController = navController
+            onSoundSelected = onSoundSelected
         )
     }
 }
@@ -54,7 +52,7 @@ fun MusicListScreen(
 fun MusicListScreenContent(
     onSoundSearch: (String) -> Unit,
     sounds: LazyPagingItems<MusicModel>,
-    navController: NavHostController
+    onSoundSelected: (Int) -> Unit
 ) {
 
     Column(
@@ -83,7 +81,7 @@ fun MusicListScreenContent(
         } else {
             ItemDisplay(
                 sounds = sounds,
-                navController = navController
+                onSoundSelected = onSoundSelected
             )
         }
     }
@@ -92,7 +90,6 @@ fun MusicListScreenContent(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ListPreview() {
-    val controller = rememberNavController()
 
     val sounds = flowOf(
         PagingData.from(
@@ -131,5 +128,5 @@ fun ListPreview() {
         )
     ).collectAsLazyPagingItems()
 
-    MusicListScreenContent(onSoundSearch = {}, sounds = sounds, navController = controller)
+    MusicListScreenContent(onSoundSearch = {}, sounds = sounds, onSoundSelected = {})
 }

@@ -18,7 +18,11 @@ fun NavGraph(
         startDestination = "MusicListScreen",
     ) {
         composable(route = "MusicListScreen") {
-            MusicListScreen(navController = navController)
+            MusicListScreen(
+                onSoundSelected = { id ->
+                    navController.navigate("MusicPlayerScreen/$id")
+                }
+            )
         }
         composable(
             route = "MusicPlayerScreen/{soundId}",

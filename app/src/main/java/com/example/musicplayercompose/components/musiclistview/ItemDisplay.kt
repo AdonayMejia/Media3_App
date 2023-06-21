@@ -9,8 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -23,7 +21,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 fun ItemDisplay(
     sounds: LazyPagingItems<MusicModel>,
-    navController: NavHostController
+    onSoundSelected: (Int) -> Unit
 ) {
     if (isLandscape()) {
         LazyVerticalGrid(
@@ -35,7 +33,7 @@ fun ItemDisplay(
                 val soundList = sounds[sound] ?: return@items
                 SoundListItem(
                     sounds = soundList,
-                    navHostController = navController
+                    onSoundSelected = onSoundSelected
                 )
             }
         }
@@ -49,7 +47,7 @@ fun ItemDisplay(
                 val songList = sounds[sound] ?: return@items
                 SoundListItem(
                     sounds = songList,
-                    navHostController = navController
+                    onSoundSelected = onSoundSelected
                 )
             }
         }
@@ -59,7 +57,6 @@ fun ItemDisplay(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewItemDisplay() {
-    val controller = rememberNavController()
 
     val sounds = flowOf(
         PagingData.from(
@@ -98,5 +95,5 @@ fun PreviewItemDisplay() {
         )
     ).collectAsLazyPagingItems()
 
-    ItemDisplay(sounds = sounds, navController = controller)
+    ItemDisplay(sounds = sounds, onSoundSelected = { })
 }
