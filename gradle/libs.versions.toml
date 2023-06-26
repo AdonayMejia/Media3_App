@@ -38,6 +38,9 @@ google-services = "4.3.15"
 media3-version = "1.0.2"
 glide = "4.15.1"
 legacySupportV4 = "1.0.0"
+mock_version = "1.13.5"
+core_testing_version = "2.2.0"
+coroutines_test = "1.6.4"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -88,6 +91,9 @@ media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3-versio
 media3-session = { module = "androidx.media3:media3-session", version.ref = "media3-version" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 androidx-legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupportV4" }
+mock = { module = "io.mockk:mockk", version.ref= "mock_version" }
+core-testing = { module = "androidx.arch.core:core-testing", version.ref = "core_testing_version" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines_test" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
