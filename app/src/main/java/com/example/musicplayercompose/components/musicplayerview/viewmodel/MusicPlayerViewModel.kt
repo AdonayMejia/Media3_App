@@ -3,6 +3,7 @@ package com.example.musicplayercompose.components.musicplayerview.viewmodel
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
@@ -45,7 +46,8 @@ class MusicPlayerViewModel @Inject constructor(
         collectMediaState()
     }
 
-    private fun collectMediaState() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+     fun collectMediaState() {
         viewModelScope.launch {
             mediaService.mediaState.collect { mediaState ->
                 when (mediaState) {
@@ -68,20 +70,22 @@ class MusicPlayerViewModel @Inject constructor(
         }
     }
 
-    override fun onCleared() {
+    public override fun onCleared() {
         viewModelScope.launch {
             mediaService.onPlayerEvent(PlayerEvents.Stop)
         }
     }
 
-    private fun formatDuration(duration: Long): String {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+     fun formatDuration(duration: Long): String {
         val minutes: Long = TimeUnit.MINUTES.convert(duration, TimeUnit.MILLISECONDS)
         val seconds: Long = (TimeUnit.SECONDS.convert(duration, TimeUnit.MILLISECONDS)
                 - minutes * TimeUnit.SECONDS.convert(ONE_MINUTE, TimeUnit.MINUTES))
         return String.format(DURATION_FORMAT, minutes, seconds)
     }
 
-    private fun calculateProgressValues(currentProgress: Long) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+     fun calculateProgressValues(currentProgress: Long) {
         val calculatedProgress =
             if (currentProgress > DEFAULT_PROGRESS_VALUE)
                 (currentProgress.toFloat() / _uiState.value.duration)
@@ -116,7 +120,8 @@ class MusicPlayerViewModel @Inject constructor(
         }
     }
 
-    private fun useEvents(events: UiEvents) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+     fun useEvents(events: UiEvents) {
         viewModelScope.launch {
             when (events) {
                 UiEvents.Play -> mediaService.onPlayerEvent(PlayerEvents.Play)
