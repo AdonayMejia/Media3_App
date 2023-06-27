@@ -19,7 +19,6 @@ class SoundRepositoryImpl @Inject constructor(
             page = page.toString(),
             pageSize = pageSize.toString()
         )
-        Log.wtf("ItWorks", "$response")
         return response.results.map {
             it.toMusicModel()
         }
