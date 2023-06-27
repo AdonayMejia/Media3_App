@@ -1,8 +1,13 @@
 package com.example.musicplayercompose
 
+import android.net.Uri
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import com.example.data.media.MediaServiceController
 import com.example.data.media.MediaState
 import com.example.data.media.PlayerEvents
+import com.example.data.media.UiEvents
+import com.example.domain.musicmodel.MusicModel
 import com.example.domain.usecases.GetSoundByIdUSeCase
 import com.example.musicplayercompose.components.musiclistview.viewmodel.MusicListViewModel
 import com.example.musicplayercompose.components.musicplayerview.viewmodel.MusicPlayerViewModel
@@ -13,6 +18,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.just
+import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
@@ -130,10 +136,78 @@ class MusicPlayerViewModelTest {
 
     }
 
+    @Test
+    fun `Test UiEvent when is backWard method call`() = runTest {
+
+        val mediaState = MutableStateFlow<MediaState>(MediaState.init)
+        coEvery { mediaServiceControllerMock.mediaState } returns mediaState
+        coEvery { mediaServiceControllerMock.onPlayerEvent(PlayerEvents.Backward) } just Runs
+
+        val viewModel = MusicPlayerViewModel(getSongUSeCase, mediaServiceControllerMock)
+
+        viewModel.useEvents(UiEvents.Backward)
+
+        coVerify { mediaServiceControllerMock.onPlayerEvent(PlayerEvents.Backward) }
+
+    }
+
+    @Test
+    fun `Test UiEvent when is forward method call`() = runTest {
+
+        val mediaState = MutableStateFlow<MediaState>(MediaState.init)
+        coEvery { mediaServiceControllerMock.mediaState } returns mediaState
+        coEvery { mediaServiceControllerMock.onPlayerEvent(PlayerEvents.Forward) } just Runs
+
+        val viewModel = MusicPlayerViewModel(getSongUSeCase, mediaServiceControllerMock)
+
+        viewModel.useEvents(UiEvents.Forward)
+
+        coVerify { mediaServiceControllerMock.onPlayerEvent(PlayerEvents.Forward) }
+
+    }
+
+    @Test
+    fun `Test UiEvent when is play and pause method call`() = runTest {
+
+        val mediaState = MutableStateFlow<MediaState>(MediaState.init)
+        coEvery { mediaServiceControllerMock.mediaState } returns mediaState
+        coEvery { mediaServiceControllerMock.onPlayerEvent(PlayerEvents.Play) } just Runs
+
+        val viewModel = MusicPlayerViewModel(getSongUSeCase, mediaServiceControllerMock)
+
+        viewModel.useEvents(UiEvents.Play)
+
+        coVerify { mediaServiceControllerMock.onPlayerEvent(PlayerEvents.Play) }
+
+    }
 
 
+    @Test
+    fun `Test load data calling getSoundUseCase and serviceController`() = runTest {
+        // Given
+        val id = 254
+        val music = mockk<MusicModel>(relaxed = true)
+        val mediaItem = MediaItem.Builder()
+            .setUri(music.preview.previewHq)
+            .setMediaMetadata(
+                MediaMetadata.Builder()
+                    .setTitle(music.name)
+                    .setArtworkUri(Uri.parse(music.images.waveform))
+                    .build()
+            )
+            .build()
 
+        coEvery { getSongUSeCase.getExecute(id) } returns music
+        coEvery { mediaServiceControllerMock.addPlayerItem(mediaItem) } just Runs
 
+        // When
+        playerViewModel.preparePlayer(id)
+
+        // Then
+        coVerify { getSongUSeCase.getExecute(id) }
+        coVerify { mediaServiceControllerMock.addPlayerItem(mediaItem) }
+        assertEquals(music.images.waveform, playerViewModel.uiState.value.soundImage)
+    }
 
 
 
