@@ -63,6 +63,9 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
+    testImplementation(libs.mock)
+    testImplementation(libs.core.testing)
+    testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
